@@ -58,7 +58,7 @@ def add_bartenders():
 
 
 def add_drinkers():
-    num = input("Enter number of bartenders: ")
+    num = input("Enter number of drinkers: ")
 
     i = 0
     while i < num:
@@ -109,6 +109,22 @@ def add_night_clubs():
 
 
 def add_beers():
+    num = input("Enter number of beers (max is 476): ")
+
+    i = 0
+    while i < num:
+        beer = Beer.generate()
+        name = beer.name
+        manf = beer.manf
+
+        try:
+            cursor.execute("""INSERT INTO beers(name, manf)
+                           VALUES(%s, %s)""",
+                           (name, manf))
+            print name, manf
+        except MySQLdb.IntegrityError:
+            i -= 1
+        i += 1
     db.commit()
 
 

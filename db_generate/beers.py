@@ -1,7 +1,5 @@
 import random
 
-NUM_BEER_MAX = 100  # Depending on http://www.fin.gov.on.ca/en/lists/bwt/beer.html
-
 class Beer:
     def __init__(self, name, manf):
         self.name = name
@@ -9,6 +7,12 @@ class Beer:
 
     @staticmethod
     def generate():
-        return
-        # TODO scrape data from:
-        # http://www.fin.gov.on.ca/en/lists/bwt/beer.html
+        f = open('manf_beer.txt', 'r')
+        lines = f.readlines()
+        randLine = random.randint(0, len(lines))
+        manf, name = lines[randLine].strip().split('|')
+
+        beer = Beer(name, manf)
+
+        f.close()
+        return beer
