@@ -3,9 +3,6 @@ import random
 import cities
 from faker import Faker
 
-DRINKER_AGE_MIN = 21
-DRINKER_AGE_MAX = 60
-
 class Drinker:
     def __init__(self, name, addr, city, gender, phone, age):
         self.name = name
@@ -15,13 +12,13 @@ class Drinker:
         self.phone = phone
         self.age = age
 
-def generate():
-    drinkers = []
-    num = input("Enter number of drinkers: ")
+    @staticmethod
+    def generate():
+        DRINKER_AGE_MIN = 21
+        DRINKER_AGE_MAX = 60
 
-    fake = Faker()
+        fake = Faker()
 
-    for i in range(num):
         is_male = True if random.randint(0, 1) == 0 else False
 
         name = names.get_full_name(gender=('male' if is_male else 'female'))
@@ -32,6 +29,4 @@ def generate():
         age = random.randint(DRINKER_AGE_MIN, DRINKER_AGE_MAX)
 
         drinker = Drinker(name, addr, city, gender, phone, age)
-        drinkers.append(drinker)
-
-    return drinkers
+        return drinker

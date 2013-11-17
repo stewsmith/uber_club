@@ -7,11 +7,8 @@ class Beer:
         self.name = name
         self.manf = manf
 
-def generate():
-    beers = []
-    num = input("Enter number of beers: ")
-
-    # TODO scrape data from:
-    # http://www.fin.gov.on.ca/en/lists/bwt/beer.html
-
-    return beers
+    @staticmethod
+    def generate():
+        return
+        # TODO scrape data from:
+        # http://www.fin.gov.on.ca/en/lists/bwt/beer.html

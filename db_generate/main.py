@@ -1,9 +1,9 @@
 import MySQLdb
-import deejays
-import bartenders
-import drinkers
-import night_clubs
-import beers
+from deejays import Deejay
+from bartenders import Bartender
+from drinkers import Drinker
+from night_clubs import Night_Club
+from beers import Beer
 
 db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
                      user="csuser",
@@ -12,75 +12,98 @@ db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
 
 cursor = db.cursor()
 
+
 def add_deejays():
-    arr = deejays.generate()
+    num = input("Enter number of deejays: ")
 
-    for i in range(len(arr)):
-        name = arr[i].name
-        genre = arr[i].genre
-        booking_cost = arr[i].booking_cost
+    i = 0
+    while i < num:
+        deejay = Deejay.generate()
+        name = deejay.name
+        genre = deejay.genre
+        booking_cost = deejay.booking_cost
 
-        cursor.execute("""INSERT IGNORE INTO deejays(name, genre, booking_cost)
-                          VALUES(%s, %s, %s)""",
-                          (name, genre, booking_cost))
-        print name, genre, booking_cost
+        try:
+            cursor.execute("""INSERT INTO deejays(name, genre, booking_cost)
+                           VALUES(%s, %s, %s)""",
+                           (name, genre, booking_cost))
+            print name, genre, booking_cost
+        except MySQLdb.IntegrityError:
+            i -= 1
+        i += 1
 
     db.commit()
 
 
 def add_bartenders():
-    arr = bartenders.generate()
+    num = input("Enter number of bartenders: ")
 
-    for i in range(len(arr)):
-        name = arr[i].name
-        gender = arr[i].gender
-        age = arr[i].age
+    i = 0
+    while i < num:
+        bartender = Bartender.generate()
+        name = bartender.name
+        gender = bartender.gender
+        age = bartender.age
 
-        cursor.execute("""INSERT IGNORE INTO bartenders(name, gender, age)
-                          VALUES(%s, %s, %s)""",
-                          (name, gender, age))
-        print name, gender, age
+        try:
+            cursor.execute("""INSERT INTO bartenders(name, gender, age)
+                        VALUES(%s, %s, %s)""",
+                        (name, gender, age))
+            print name, gender, age
+        except MySQLdb.IntegrityError:
+            i -= 1
+        i += 1
 
     db.commit()
 
 
 def add_drinkers():
-    arr = drinkers.generate()
+    num = input("Enter number of bartenders: ")
 
-    for i in range(len(arr)):
-        name = arr[i].name
-        addr = arr[i].addr
-        city = arr[i].city
-        gender = arr[i].gender
-        phone = arr[i].phone
-        age = arr[i].age
+    i = 0
+    while i < num:
+        drinker = Drinker.generate()
+        name = drinker.name
+        addr = drinker.addr
+        city = drinker.city
+        gender = drinker.gender
+        phone = drinker.phone
+        age = drinker.age
 
-        cursor.execute("""INSERT IGNORE INTO drinkers(name, addr, city,
-                                                      gender, phone, age)
-                          VALUES(%s, %s, %s, %s, %s, %s)""",
-                          (name, addr, city, gender, phone, age))
-
-        print name, addr, city, gender, phone, age
+        try:
+            cursor.execute("""INSERT INTO drinkers(name, addr, city,
+                                                gender, phone, age)
+                        VALUES(%s, %s, %s, %s, %s, %s)""",
+                        (name, addr, city, gender, phone, age))
+            print name, addr, city, gender, phone, age
+        except MySQLdb.IntegrityError:
+            i -= 1
+        i += 1
 
     db.commit()
 
 
 def add_night_clubs():
-    arr = night_clubs.generate()
+    num = input("Enter number of night clubs: ")
 
-    for i in range(len(arr)):
-        name = arr[i].name
-        addr = arr[i].addr
-        city = arr[i].city
-        phone = arr[i].phone
-        license = arr[i].license
+    i = 0
+    while i < num:
+        night_club = Night_Club.generate()
+        name = night_club.name
+        addr = night_club.addr
+        city = night_club.city
+        phone = night_club.phone
+        license = night_club.license
 
-        cursor.execute("""INSERT IGNORE INTO night_clubs(name, addr, city,
-                                                         phone, license)
-                       VALUES(%s, %s, %s, %s, %s)""",
-                       (name, addr, city, phone, license))
-
-        print name, addr, city, phone, license
+        try:
+            cursor.execute("""INSERT INTO night_clubs(name, addr, city,
+                                                    phone, license)
+                        VALUES(%s, %s, %s, %s, %s)""",
+                        (name, addr, city, phone, license))
+            print name, addr, city, phone, license
+        except MySQLdb.IntegrityError:
+            i -= 1
+        i += 1
 
     db.commit()
 

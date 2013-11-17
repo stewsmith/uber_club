@@ -5,5 +5,5 @@ def get_random():
               'Fresno', 'Sacramento', 'Long Beach', 'Oakland', 'Bakersfield',
               'Anaheim', 'Santa Ana', 'Riverside', 'Stockton', 'Chula Vista',
               'Fremont', 'Irvine', 'San Bernadino', 'Modesto', 'Oxnard', 'Fontana']
-    return cities[random.randint(0, len(cities))]
+    return cities[random.randint(0, len(cities) - 1)]
 
