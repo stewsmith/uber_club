@@ -2,6 +2,8 @@ import MySQLdb
 import deejays
 import bartenders
 import drinkers
+import night_clubs
+import beers
 
 db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
                      user="csuser",
@@ -19,7 +21,8 @@ def add_deejays():
         booking_cost = arr[i].booking_cost
 
         cursor.execute("""INSERT IGNORE INTO deejays(name, genre, booking_cost)
-                       VALUES(%s, %s, %s)""", (name, genre, booking_cost))
+                          VALUES(%s, %s, %s)""",
+                          (name, genre, booking_cost))
         print name, genre, booking_cost
 
     db.commit()
@@ -34,7 +37,8 @@ def add_bartenders():
         age = arr[i].age
 
         cursor.execute("""INSERT IGNORE INTO bartenders(name, gender, age)
-                       VALUES(%s, %s, %s)""", (name, gender, age))
+                          VALUES(%s, %s, %s)""",
+                          (name, gender, age))
         print name, gender, age
 
     db.commit()
@@ -51,10 +55,10 @@ def add_drinkers():
         phone = arr[i].phone
         age = arr[i].age
 
-        #cursor.execute("""INSERT IGNORE INTO drinkers(name, addr, city,
-                                                      #gender, phone, age)
-                       #VALUES(%s, %s, %s, %s, %s, %s)""",
-                       #(name, addr, city, gender, phone, age))
+        cursor.execute("""INSERT IGNORE INTO drinkers(name, addr, city,
+                                                      gender, phone, age)
+                          VALUES(%s, %s, %s, %s, %s, %s)""",
+                          (name, addr, city, gender, phone, age))
 
         print name, addr, city, gender, phone, age
 
@@ -62,6 +66,22 @@ def add_drinkers():
 
 
 def add_night_clubs():
+    arr = night_clubs.generate()
+
+    for i in range(len(arr)):
+        name = arr[i].name
+        addr = arr[i].addr
+        city = arr[i].city
+        phone = arr[i].phone
+        license = arr[i].license
+
+        cursor.execute("""INSERT IGNORE INTO night_clubs(name, addr, city,
+                                                         phone, license)
+                       VALUES(%s, %s, %s, %s, %s)""",
+                       (name, addr, city, phone, license))
+
+        print name, addr, city, phone, license
+
     db.commit()
 
 

@@ -1,5 +1,6 @@
 import names
 import random
+import cities
 from faker import Faker
 
 DRINKER_AGE_MIN = 21
@@ -25,7 +26,7 @@ def generate():
 
         name = names.get_full_name(gender=('male' if is_male else 'female'))
         addr = fake.street_address()
-        city = fake.city()
+        city = cities.get_random()
         gender = 'M' if is_male else 'F'
         phone = fake.random_number(digits=10)
         age = random.randint(DRINKER_AGE_MIN, DRINKER_AGE_MAX)
