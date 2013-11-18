@@ -14,7 +14,7 @@ cursor = db.cursor()
 
 
 def add_deejays():
-    num = input("Enter number of deejays: ")
+    num = input("Enter number of DJs: ")
 
     i = 0
     while i < num:
