@@ -1,7 +1,7 @@
 from BeautifulSoup import BeautifulSoup
 
 beers_html = open('beers.html', 'r')
-target = open('beer_manf.txt', 'w')
+target = open('manf_beer.txt', 'w')
 soup = BeautifulSoup(beers_html)
 
 matches = []
