@@ -47,8 +47,8 @@ def add_bartenders():
 
         try:
             cursor.execute("""INSERT INTO bartenders(name, gender, age)
-                        VALUES(%s, %s, %s)""",
-                        (name, gender, age))
+                           VALUES(%s, %s, %s)""",
+                           (name, gender, age))
             print name, gender, age
         except MySQLdb.IntegrityError:
             i -= 1
@@ -73,8 +73,8 @@ def add_drinkers():
         try:
             cursor.execute("""INSERT INTO drinkers(name, addr, city,
                                                 gender, phone, age)
-                        VALUES(%s, %s, %s, %s, %s, %s)""",
-                        (name, addr, city, gender, phone, age))
+                           VALUES(%s, %s, %s, %s, %s, %s)""",
+                           (name, addr, city, gender, phone, age))
             print name, addr, city, gender, phone, age
         except MySQLdb.IntegrityError:
             i -= 1
@@ -93,14 +93,14 @@ def add_night_clubs():
         addr = night_club.addr
         city = night_club.city
         phone = night_club.phone
-        license = night_club.license
+        nc_license = night_club.license  # license is a python variable
 
         try:
             cursor.execute("""INSERT INTO night_clubs(name, addr, city,
                                                     phone, license)
-                        VALUES(%s, %s, %s, %s, %s)""",
-                        (name, addr, city, phone, license))
-            print name, addr, city, phone, license
+                           VALUES(%s, %s, %s, %s, %s)""",
+                           (name, addr, city, phone, nc_license))
+            print name, addr, city, phone, nc_license
         except MySQLdb.IntegrityError:
             i -= 1
         i += 1

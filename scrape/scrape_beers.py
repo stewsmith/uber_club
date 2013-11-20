@@ -1,12 +1,12 @@
 from BeautifulSoup import BeautifulSoup
 
 beers_html = open('beers.html', 'r')
-target = open('beer_manf.txt', 'w')
+target = open('manf_beer.txt', 'w')
 soup = BeautifulSoup(beers_html)
 
 matches = []
 
-for link in soup.findAll('td', {'class':'t'}):
+for link in soup.findAll('td', {'class': 't'}):
     matches.append(link)
 
 for i in range(0, len(matches), 3):

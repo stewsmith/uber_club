@@ -7,7 +7,7 @@ class Beer:
 
     @staticmethod
     def generate():
-        f = open('manf_beer.txt', 'r')
+        f = open('../scrape/manf_beer.txt', 'r')
         lines = f.readlines()
         randLine = random.randint(0, len(lines))
         manf, name = lines[randLine].strip().split('|')
