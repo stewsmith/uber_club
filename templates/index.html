@@ -6,10 +6,10 @@
     </head>
     <body>
         <h1>Compare all your costs at once</h1>
-        <form>
-            Give me your night-club name:
-            <input type="text" name="url">
-        </form>
+        <div class="ui-widget">
+            <label for="clubs">Clubs: </label>
+            <input id="clubs" />
+        </div>
         Bartenders Available
         <select multiple="multiple">
             <option>Ham</option>
@@ -31,10 +31,6 @@
             <option>Cream</option>
             <option>Cheese</option>
         </select>
-        <div class="ui-widget">
-            <label for="clubs">Clubs: </label>
-            <input id="clubs" />
-        </div>
         <script>
             {% autoescape false %}
             var clubs = {{ data }};
@@ -42,7 +38,6 @@
             $( "#clubs" ).autocomplete({
                 source: clubs
             });
-            console.log(clubs);
         </script>
     </body>
 </html>
