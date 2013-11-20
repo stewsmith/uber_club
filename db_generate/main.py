@@ -9,7 +9,6 @@ db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
                      user="csuser",
                      passwd="cs97f462",
                      db="nightclubconsultants")
-
 cursor = db.cursor()
 
 

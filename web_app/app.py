@@ -10,7 +10,6 @@ def db_select(query):
                          db="nightclubconsultants")
 
     cursor = db.cursor()
-
     cursor.execute(query)
     ans = []
     for row in list(cursor.fetchall()):
