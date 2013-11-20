@@ -28,7 +28,6 @@ body {
 .footer {
   padding-top: 19px;
   color: #777;
-  border-top: 1px solid #e5e5e5;
 }
 
 /* Customize container */
@@ -45,6 +44,7 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  opacity: 0.75;
 }
 .jumbotron .btn {
   font-size: 21px;
