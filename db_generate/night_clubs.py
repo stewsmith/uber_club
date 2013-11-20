@@ -3,20 +3,35 @@ import cities
 from faker import Faker
 
 def generate_name():
-    adjs = open("../scrape/adjectives.txt", "r")
-    adjs_lines = adjs.readlines()
-    i = random.randint(0, len(adjs_lines))
-    rand_adj = adjs_lines[i].strip().capitalize()
+    rand_adj = ""
+    rand_animal = ""
 
-    animals = open("../scrape/animals.txt", "r")
-    animals_lines = animals.readlines()
-    i = random.randint(0, len(animals_lines))
-    rand_animal = animals_lines[i].strip().capitalize()
+    animalPresent = random.randint(1, 10)
+    if(animalPresent> 3):
+        animals = open("../scrape/animals.txt", "r")
+        animals_lines = animals.readlines()
+        i = random.randint(0, len(animals_lines))
+        rand_animal = animals_lines[i].strip().capitalize()
+        animals.close()
 
-    name = "The %s %s" % (rand_adj, rand_animal)
+    adjectivePresent = 10
+    if rand_animal: adjectivePresent = random.randint(1, 10)
+    if(adjectivePresent > 3):
+        adjs = open("../scrape/adjectives.txt", "r")
+        adjs_lines = adjs.readlines()
+        i = random.randint(0, len(adjs_lines))
+        rand_adj = adjs_lines[i].strip().capitalize()
+        adjs.close()
 
-    adjs.close()
-    animals.close()
+
+    if rand_adj and rand_animal:
+        name = "The %s %s" % (rand_adj, rand_animal)
+    elif rand_adj:
+        name = "The %s" % (rand_adj)
+    elif rand_animal:
+        name = "The %s" % (rand_animal)
+
+
     return name
 
 
