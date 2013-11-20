@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    </head>
+    <body>
+        <h1>Compare all your costs at once</h1>
+        <form>
+            Give me your night-club name:
+            <input type="text" name="url">
+        </form>
+        Bartenders Available
+        <select multiple="multiple">
+            <option>Ham</option>
+            <option>Bone</option>
+            <option>Cream</option>
+            <option>Cheese</option>
+        </select>
+        Beers in Stock
+        <select multiple="multiple">
+            <option>Ham</option>
+            <option>Bone</option>
+            <option>Cream</option>
+            <option>Cheese</option>
+        </select>
+        DJs Available
+        <select multiple="multiple">
+            <option>Ham</option>
+            <option>Bone</option>
+            <option>Cream</option>
+            <option>Cheese</option>
+        </select>
+        <div class="ui-widget">
+            <label for="clubs">Clubs: </label>
+            <input id="clubs" />
+        </div>
+        <script>
+            {% autoescape false %}
+            var clubs = {{ data }};
+            {% endautoescape %}
+            $( "#clubs" ).autocomplete({
+                source: clubs
+            });
+            console.log(clubs);
+        </script>
+    </body>
+</html>
