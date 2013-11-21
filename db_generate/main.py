@@ -1,4 +1,5 @@
 import MySQLdb
+import relations
 from deejays import Deejay
 from bartenders import Bartender
 from drinkers import Drinker
@@ -133,6 +134,7 @@ def main():
     add_drinkers(db)
     add_night_clubs(db)
     add_beers(db)
+    relations.create_relations()
     db.close()
 
 
