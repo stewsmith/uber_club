@@ -22,6 +22,9 @@ class Database:
 
         return res
 
+    def commit(self):
+        self.db.commit()
+
     def cursor(self):
         return self.db.cursor()
 

@@ -26,4 +26,5 @@ def create_works_at():
 
             j +=1
 
+    db.commit()
     db.close()

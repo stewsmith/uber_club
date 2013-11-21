@@ -22,4 +22,5 @@ def create_likes():
                 i -= 1
             i += 1
 
+    db.commit()
     db.close()

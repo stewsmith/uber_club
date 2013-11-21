@@ -4,15 +4,10 @@ from bartenders import Bartender
 from drinkers import Drinker
 from night_clubs import Night_Club
 from beers import Beer
+from database import Database
 
-db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
-                     user="csuser",
-                     passwd="cs97f462",
-                     db="nightclubconsultants")
-cursor = db.cursor()
-
-
-def add_deejays():
+def add_deejays(db):
+    cursor = db.cursor()
     num = input("Enter number of DJs: ")
 
     i = 0
@@ -34,7 +29,8 @@ def add_deejays():
     db.commit()
 
 
-def add_bartenders():
+def add_bartenders(db):
+    cursor = db.cursor()
     num = input("Enter number of bartenders: ")
 
     i = 0
@@ -56,7 +52,8 @@ def add_bartenders():
     db.commit()
 
 
-def add_drinkers():
+def add_drinkers(db):
+    cursor = db.cursor()
     num = input("Enter number of drinkers: ")
 
     i = 0
@@ -82,7 +79,8 @@ def add_drinkers():
     db.commit()
 
 
-def add_night_clubs():
+def add_night_clubs(db):
+    cursor = db.cursor()
     num = input("Enter number of night clubs: ")
 
     i = 0
@@ -107,7 +105,8 @@ def add_night_clubs():
     db.commit()
 
 
-def add_beers():
+def add_beers(db):
+    cursor = db.cursor()
     num = input("Enter number of beers (max is 476): ")
 
     i = 0
@@ -128,11 +127,12 @@ def add_beers():
 
 
 def main():
-    add_deejays()
-    add_bartenders()
-    add_drinkers()
-    add_night_clubs()
-    add_beers()
+    db = Database().connect()
+    add_deejays(db)
+    add_bartenders(db)
+    add_drinkers(db)
+    add_night_clubs(db)
+    add_beers(db)
     db.close()
 
 
