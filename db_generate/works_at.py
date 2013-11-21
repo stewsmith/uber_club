@@ -1,32 +1,13 @@
 import random
 import MySQLdb
-
-def db_select(query):
-    db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
-                         user="csuser",
-                         passwd="cs97f462",
-                         db="nightclubconsultants")
-
-    cursor = db.cursor()
-    cursor.execute(query)
-
-    ans = []
-    for row in list(cursor.fetchall()):
-        ans.append(row[0])
-
-    db.close()
-    return ans
+from database import Database
 
 def create_works_at():
-    bartenders = db_select("SELECT name FROM bartenders")
-    night_clubs = db_select("SELECT name FROM night_clubs")
-
-    db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
-                         user="csuser",
-                         passwd="cs97f462",
-                         db="nightclubconsultants")
-
+    db = Database().connect()
     cursor = db.cursor()
+
+    bartenders = db.select("SELECT name FROM bartenders")
+    night_clubs = db.select("SELECT name FROM night_clubs")
 
     #Between 3 and 12 bartenders per night_club
     for night_club in night_clubs:
@@ -46,5 +27,3 @@ def create_works_at():
             j +=1
 
     db.close()
-
-

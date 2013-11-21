@@ -1,9 +1,9 @@
 import MySQLdb
 import random
-from database import DB
+from database import Database
 
 def create_likes():
-    db = DB().connect()
+    db = Database().connect()
     cursor = db.cursor()
 
     drinkers = db.select("SELECT name FROM drinkers")
