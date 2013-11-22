@@ -24,8 +24,8 @@ def create_frequented():
                 if curr_date.weekday() == 5:
                     curr_deejay = db.select("""select deejay
                                             from performed_at p
-                                            where p.date=%s and night_club=%s"""
-                                            %(date_str, night_club)[0])
+                                            where p.date='%s' and night_club='%s'"""
+                                            %(date_str, night_club))[0]
                     #Check if night_club has House DJ playing,
                     #if so, increase cover_fee and increase num_drinkers
                     if curr_deejay in house_deejays:
@@ -36,7 +36,7 @@ def create_frequented():
                     try:
                         cursor.execute("""INSERT INTO frequented(drinker, night_club, date, cover_fee)
                                     VALUES(%s, %s, %s, %s)""", (drinker, night_club, date_str, cover_fee))
-                        print drinker, night_club, date_str, cover_fee
+                        #print drinker, night_club, date_str, cover_fee
                     except MySQLdb.IntegrityError:
                         i -= 1
                     i += 1
@@ -100,7 +100,6 @@ def create_likes():
 
     db.commit()
     db.close()
-
 
 
 def create_works_at():
