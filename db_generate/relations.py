@@ -4,6 +4,45 @@ import random
 from database import Database
 from deejays import Deejay
 
+def create_frequented():
+    db = Database().connect()
+    cursor = db.cursor()
+
+    drinkers = db.select("SELECT name FROM drinkers")
+    night_clubs = db.select("SELECT name FROM night_clubs")
+    house_deejays = db.select("SELECT name FROM deejays WHERE genre='House'")
+
+    initial_date = datetime.date(2012, 1, 1)
+    for i in range(365):
+        curr_date = initial_date + datetime.timedelta(days=i)
+        #Night_clubs only open on thur, fri, sat
+        if curr_date.weekday() in [3, 4, 5]:
+            date_str = curr_date.strftime("%Y-%m-%d")
+            for night_club in night_clubs:
+                i, num_drinkers = 0, random.randint(50, 100)
+                cover_fee = random.randrange(20, 50, 5)
+                if curr_date.weekday() == 5:
+                    curr_deejay = db.select("""select deejay
+                                            from performed_at p
+                                            where p.date=%s and night_club=%s"""
+                                            %(date_str, night_club)[0])
+                    #Check if night_club has House DJ playing,
+                    #if so, increase cover_fee and increase num_drinkers
+                    if curr_deejay in house_deejays:
+                        num_drinkers += random.randint(50, 100)
+                        cover_fee += 25
+                while i < num_drinkers:
+                    drinker = drinkers[random.randint(0, len(drinkers) - 1)]
+                    try:
+                        cursor.execute("""INSERT INTO frequented(drinker, night_club, date, cover_fee)
+                                    VALUES(%s, %s, %s, %s)""", (drinker, night_club, date_str, cover_fee))
+                        print drinker, night_club, date_str, cover_fee
+                    except MySQLdb.IntegrityError:
+                        i -= 1
+                    i += 1
+    db.commit()
+    db.close()
+
 
 def create_performed_at():
     db = Database().connect()
@@ -61,6 +100,7 @@ def create_likes():
 
     db.commit()
     db.close()
+
 
 
 def create_works_at():
@@ -124,4 +164,5 @@ def create_relations():
     create_works_at()
     create_sells()
     create_performed_at()
+    create_frequented()
 
