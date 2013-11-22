@@ -18,7 +18,8 @@ class Database:
         cursor.execute(query)
         res = []
         for row in list(cursor.fetchall()):
-            res.append(row[0])
+            if len(row) == 1: res.append(row[0])
+            else: res.append(list(row))
 
         return res
 

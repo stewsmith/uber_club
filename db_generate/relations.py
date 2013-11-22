@@ -1,6 +1,42 @@
 import MySQLdb
+import datetime
 import random
 from database import Database
+from deejays import Deejay
+
+
+def create_performed_at():
+    db = Database().connect()
+    cursor = db.cursor()
+
+    night_clubs = db.select("SELECT name FROM night_clubs")
+    deejays = map(lambda d: Deejay(d[0], d[1], d[2]), db.select("SELECT * FROM deejays"))
+
+    initial_date = datetime.date(2012, 1, 1)
+    for i in range(365):
+        curr_date = initial_date + datetime.timedelta(days=i)
+        #Night_clubs only open on thur, fri, sat
+        if curr_date.weekday() in [3, 4, 5]:
+            for night_club in night_clubs:
+                i, num_deejays = 0, random.randint(1, 2)
+                while i < num_deejays:
+                    #if Saturday then 50% chance of getting House DJ
+                    if curr_date.weekday() == 6 and random.randint(0, 1) == 0:
+                        house_deejays = filter(lambda d: d.genre == 'House', deejays)
+                        deejay = house_deejays[random.randint(0, len(house_deejays) - 1)]
+                    else:
+                        deejay = deejays[random.randint(0, len(deejays) - 1)]
+                    try:
+
+                        date_str = curr_date.strftime("%Y-%m-%d")
+                        cursor.execute("""INSERT INTO performed_at(deejay, night_club, date)
+                                    VALUES(%s, %s, %s)""", (deejay.name, night_club, date_str))
+                        print (deejay.name, night_club, date_str)
+                    except MySQLdb.IntegrityError:
+                        i -= 1
+                    i += 1
+    db.commit()
+    db.close()
 
 
 def create_likes():
@@ -87,3 +123,5 @@ def create_relations():
     create_likes()
     create_works_at()
     create_sells()
+    create_performed_at()
+
