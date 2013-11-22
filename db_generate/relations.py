@@ -4,13 +4,41 @@ import random
 from database import Database
 from deejays import Deejay
 
+
 def create_served():
-    #for every date
-        #every night_club
-            #every bartender -- more tip for young and female
-                #n = 40% of num_drinkers at night_club
-                #serves num_beers n and 3n between 11pm and 2am
-                #serves a random beer from that night_club
+#for every date
+    #every night_club
+        #every bartender -- more tip for young and female
+            #n = 40% of num_drinkers at night_club
+            #serves num_beers n and 3n between 11pm and 2am
+            #serves a random beer from that night_club
+    db = Database().connect()
+    cursor = db.cursor()
+
+    night_clubs = db.select("SELECT name FROM night_clubs")
+
+    initial_date = datetime.date(2012, 1, 1)
+    for i in range(365):
+        curr_date = initial_date + datetime.timedelta(days=i)
+
+        if curr_date.weekday() in [3, 4, 5]:
+            date_str = curr_date.strftime("%Y-%m-%d")
+            for night_club in night_clubs:
+                bartenders = db.select("SELECT bartender FROM works_at"
+                                       "WHERE night_club='%s'" % night_club)
+                num_drinkers = db.select("SELECT COUNT(*) FROM frequented f"
+                                         "WHERE f.date='%s'"
+                                         "AND night_club='%s'" % (date_str, night_club))
+                for bartender in bartenders:
+                    num_served_min = int(0.4 * num_drinkers)
+                    num_served_max = 3 * num_served_min
+
+                    for j in random.randint(num_served_min, num_served_max):
+                        #if young and female
+
+    db.commit()
+    db.close()
+
 
 def create_frequented():
     db = Database().connect()
@@ -165,6 +193,7 @@ def create_sells():
 
     db.commit()
     db.close()
+
 
 def create_relations():
     create_likes()
