@@ -24,21 +24,58 @@ def create_served():
         if curr_date.weekday() in [3, 4, 5]:
             date_str = curr_date.strftime("%Y-%m-%d")
             for night_club in night_clubs:
-                bartenders = db.select("SELECT bartender FROM works_at"
-                                       "WHERE night_club='%s'" % night_club)
-                num_drinkers = db.select("SELECT COUNT(*) FROM frequented f"
-                                         "WHERE f.date='%s'"
-                                         "AND night_club='%s'" % (date_str, night_club))
+                bartenders = db.select("""SELECT bartender FROM works_at
+                                       WHERE night_club='%s'""" % night_club)
+                drinkers = db.select("""SELECT drinker FROM frequented f
+                                         WHERE f.date='%s'
+                                         AND night_club='%s'""" % (date_str, night_club))
+                beers = db.select("""SELECT beer FROM sells
+                                    WHERE night_club='%s'""" % night_club)
+                num_drinkers = len(drinkers)
                 for bartender in bartenders:
+                    young_and_beautiful = False
+                    age = db.select("""SELECT age
+                                    FROM bartenders
+                                    WHERE name='%s'""" % bartender)[0]
+                    if age < 30:
+                        #only make query if correct age
+                        gender = db.select("""SELECT gender
+                                        FROM bartenders
+                                        WHERE name='%s'""" % bartender)[0]
+                        if gender == "F":
+                            young_and_beautiful = True
                     num_served_min = int(0.4 * num_drinkers)
                     num_served_max = 3 * num_served_min
 
-                    for j in random.randint(num_served_min, num_served_max):
-                        #if young and female
-
+                    #Each bartender serving 20 - 80 drinks
+                    num_served = random.randint(num_served_min, num_served_max)
+                    j = 0
+                    while j < num_served:
+                        tip = random.randint(1, 5)
+                        if young_and_beautiful:
+                            tip += 5
+                        beer = beers[random.randint(0, len(beers) - 1)]
+                        time = get_rand_time()
+                        drinker = drinkers[random.randint(0, len(drinkers) - 1)]
+                        try:
+                            cursor.execute("""INSERT INTO served(bartender, drinker, beer, tip, date, time, night_club)
+                                        VALUES(%s, %s, %s, %s, %s, %s, %s)""",
+                                           (bartender, drinker, beer, tip, curr_date, time, night_club))
+                            print bartender, drinker, beer, tip, curr_date, time, night_club
+                        except MySQLdb.IntegrityError:
+                            j -= 1
+                        j += 1
     db.commit()
     db.close()
 
+
+def get_rand_time():
+    hours = [11, 12, 1]
+    minutes = range(0, 60)
+    hour = random.choice(hours)
+    minute = random.choice(minutes)
+
+    return "%s:%s:00" %(hour, minute)
 
 def create_frequented():
     db = Database().connect()
@@ -202,3 +239,4 @@ def create_relations():
     create_performed_at()
     create_frequented()
 
+create_served()
