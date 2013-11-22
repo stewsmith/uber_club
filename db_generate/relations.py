@@ -4,6 +4,14 @@ import random
 from database import Database
 from deejays import Deejay
 
+def create_served():
+    #for every date
+        #every night_club
+            #every bartender -- more tip for young and female
+                #n = 40% of num_drinkers at night_club
+                #serves num_beers n and 3n between 11pm and 2am
+                #serves a random beer from that night_club
+
 def create_frequented():
     db = Database().connect()
     cursor = db.cursor()
