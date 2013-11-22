@@ -238,5 +238,4 @@ def create_relations():
     create_sells()
     create_performed_at()
     create_frequented()
-
-create_served()
+    create_served()

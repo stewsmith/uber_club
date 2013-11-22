@@ -18,10 +18,12 @@ class Deejay:
 
         name = "DJ " + names.get_last_name()
         genre = GENRES[random.randint(0, len(GENRES) - 1)]
+        if random.randint(0, 10) == 0:
+            genre = "House"
         booking_cost = random.randint(BOOKING_COST_MIN, BOOKING_COST_MAX)
 
         if (genre == "House"):
-            booking_cost += random.randint(200, 300)
+            booking_cost += random.randint(300, 500)
 
         dj = Deejay(name, genre, booking_cost)
         return dj
