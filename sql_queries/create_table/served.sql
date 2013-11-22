@@ -1,6 +1,6 @@
 use nightclubconsultants;
 
-CREATE TABLE serves
+CREATE TABLE served
 (
 bartender varchar(80) NOT NULL,
 drinker varchar(80) NOT NULL,
