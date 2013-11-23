@@ -17,8 +17,8 @@
     <link href="/static/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/jumbotron-narrow.css" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
+    <link href="/static/css/jumbotron-narrow.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,8 +45,10 @@
         <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
         <div class="ui-widget">
             <label for="clubs">Clubs: </label>
-            <input id="clubs" />
+            <input id="clubs"/>
         </div>
+        <select id="bartenders" multiple="multiple" style="display:none;">
+        </select>
       </div>
 
       <div class="footer">
@@ -56,17 +58,19 @@
     </div> <!-- /container -->
 
 
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
+    </body>
     <script>
         {% autoescape false %}
         var clubs = {{ data }};
         {% endautoescape %}
-        $( "#clubs" ).autocomplete({
+        $("#clubs").autocomplete({
             source: clubs
         });
     </script>
-    </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>

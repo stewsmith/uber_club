@@ -1,26 +1,21 @@
-from flask import Flask, render_template
-import MySQLdb
+from flask import Flask, render_template, request, jsonify
+from database import Database
 
+db = Database().connect()
 app = Flask(__name__)
-
-def db_select(query):
-    db = MySQLdb.connect(host="cs336-23.cs.rutgers.edu",
-                         user="csuser",
-                         passwd="cs97f462",
-                         db="nightclubconsultants")
-
-    cursor = db.cursor()
-    cursor.execute(query)
-    ans = []
-    for row in list(cursor.fetchall()):
-        ans += list(row)
-    db.close()
-    return ans
 
 @app.route("/")
 def index():
-    data = db_select("SELECT name FROM night_clubs")
+    data = db.select("SELECT name FROM night_clubs")
     return render_template('index.html', data=data)
+
+@app.route('/clubs', methods=['GET'])
+def my_form_post():
+    night_club = request.args.get('name')
+    bartenders = db.select("""SELECT bartender FROM works_at
+                           WHERE night_club='%s'""" % night_club)
+    ret_data = {"bartenders": bartenders}
+    return jsonify(ret_data)
 
 if __name__ == "__main__":
     app.run('0.0.0.0', debug=True)
