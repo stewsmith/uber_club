@@ -5,12 +5,21 @@ $("#clubs").on("autocompletechange", function() {
         url:"/clubs",
         data:{name: club},
         success: function(data) {
+            //Get bartenders
             $('#bartenders').empty();
             data.bartenders.forEach(function(o) {
                 $('#bartenders').append("<option value='" + o + "'> " + o + " </option>");
             });
             $('#bartenders').attr("size", data.bartenders.length);
-            $('#bartenders').attr("style", "display:block;");
+            $('#bartenders_div').attr("style", "display:block;");
+
+            //Get beers
+            $('#beers').empty();
+            data.beers.forEach(function(o) {
+                $('#beers').append("<option value='" + o + "'> " + o + " </option>");
+            });
+            $('#beers').attr("size", data.beers.length);
+            $('#beers_div').attr("style", "display:block;");
         }
     });
 });

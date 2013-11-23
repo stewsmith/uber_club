@@ -14,7 +14,9 @@ def my_form_post():
     night_club = request.args.get('name')
     bartenders = db.select("""SELECT bartender FROM works_at
                            WHERE night_club='%s'""" % night_club)
-    ret_data = {"bartenders": bartenders}
+    beers = db.select("""SELECT beer FROM sells
+                           WHERE night_club='%s'""" % night_club)
+    ret_data = {"bartenders": bartenders, "beers": beers}
     return jsonify(ret_data)
 
 if __name__ == "__main__":
