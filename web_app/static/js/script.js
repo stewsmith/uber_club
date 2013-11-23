@@ -14,3 +14,11 @@ $("#clubs").on("autocompletechange", function() {
         }
     });
 });
+
+$("#datepicker").datepicker({
+    minDate: new Date(),
+    beforeShowDay: function(date) {
+        var day = date.getDay();
+        return [day == 4 || day == 5 || day == 6];
+    }
+});
