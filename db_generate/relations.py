@@ -17,8 +17,8 @@ def create_served():
 
     night_clubs = db.select("SELECT name FROM night_clubs")
 
-    initial_date = datetime.date(2012, 1, 1)
-    for i in range(365):
+    initial_date = datetime.date(2012, 6, 1)
+    for i in range(183):
         curr_date = initial_date + datetime.timedelta(days=i)
 
         if curr_date.weekday() in [3, 4, 5]:
@@ -27,10 +27,10 @@ def create_served():
                 bartenders = db.select("""SELECT bartender FROM works_at
                                        WHERE night_club='%s'""" % night_club)
                 drinkers = db.select("""SELECT drinker FROM frequented f
-                                         WHERE f.date='%s'
-                                         AND night_club='%s'""" % (date_str, night_club))
+                                     WHERE f.date='%s'
+                                     AND night_club='%s'""" % (date_str, night_club))
                 beers = db.select("""SELECT beer FROM sells
-                                    WHERE night_club='%s'""" % night_club)
+                                  WHERE night_club='%s'""" % night_club)
                 num_drinkers = len(drinkers)
                 for bartender in bartenders:
                     young_and_beautiful = False
@@ -40,14 +40,13 @@ def create_served():
                     if age < 30:
                         #only make query if correct age
                         gender = db.select("""SELECT gender
-                                        FROM bartenders
-                                        WHERE name='%s'""" % bartender)[0]
+                                           FROM bartenders
+                                           WHERE name='%s'""" % bartender)[0]
                         if gender == "F":
                             young_and_beautiful = True
-                    num_served_min = int(0.4 * num_drinkers)
-                    num_served_max = 3 * num_served_min
 
-                    #Each bartender serving 20 - 80 drinks
+                    num_served_min = int(0.4 * num_drinkers)
+                    num_served_max = 2 * num_served_min
                     num_served = random.randint(num_served_min, num_served_max)
                     j = 0
                     while j < num_served:
@@ -59,7 +58,7 @@ def create_served():
                         drinker = drinkers[random.randint(0, len(drinkers) - 1)]
                         try:
                             cursor.execute("""INSERT INTO served(bartender, drinker, beer, tip, date, time, night_club)
-                                        VALUES(%s, %s, %s, %s, %s, %s, %s)""",
+                                           VALUES(%s, %s, %s, %s, %s, %s, %s)""",
                                            (bartender, drinker, beer, tip, curr_date, time, night_club))
                             print bartender, drinker, beer, tip, curr_date, time, night_club
                         except MySQLdb.IntegrityError:
@@ -85,8 +84,8 @@ def create_frequented():
     night_clubs = db.select("SELECT name FROM night_clubs")
     house_deejays = db.select("SELECT name FROM deejays WHERE genre='House'")
 
-    initial_date = datetime.date(2012, 1, 1)
-    for i in range(365):
+    initial_date = datetime.date(2012, 6, 1)
+    for i in range(183):
         curr_date = initial_date + datetime.timedelta(days=i)
         #Night_clubs only open on thur, fri, sat
         if curr_date.weekday() in [3, 4, 5]:
@@ -95,10 +94,11 @@ def create_frequented():
                 i, num_drinkers = 0, random.randint(50, 100)
                 cover_fee = random.randrange(20, 50, 5)
                 if curr_date.weekday() == 5:
-                    curr_deejay = db.select("""select deejay
-                                            from performed_at p
-                                            where p.date='%s' and night_club='%s'"""
-                                            %(date_str, night_club))[0]
+                    curr_deejay = db.select("""SELECT deejay
+                                            FROM performed_at p
+                                            WHERE p.date='%s'
+                                            AND night_club='%s'"""
+                                            % (date_str, night_club))[0]
                     #Check if night_club has House DJ playing,
                     #if so, increase cover_fee and increase num_drinkers
                     if curr_deejay in house_deejays:
@@ -108,8 +108,8 @@ def create_frequented():
                     drinker = drinkers[random.randint(0, len(drinkers) - 1)]
                     try:
                         cursor.execute("""INSERT INTO frequented(drinker, night_club, date, cover_fee)
-                                    VALUES(%s, %s, %s, %s)""", (drinker, night_club, date_str, cover_fee))
-                        #print drinker, night_club, date_str, cover_fee
+                                       VALUES(%s, %s, %s, %s)""", (drinker, night_club, date_str, cover_fee))
+                        print drinker, night_club, date_str, cover_fee
                     except MySQLdb.IntegrityError:
                         i -= 1
                     i += 1
@@ -124,8 +124,8 @@ def create_performed_at():
     night_clubs = db.select("SELECT name FROM night_clubs")
     deejays = map(lambda d: Deejay(d[0], d[1], d[2]), db.select("SELECT * FROM deejays"))
 
-    initial_date = datetime.date(2012, 1, 1)
-    for i in range(365):
+    initial_date = datetime.date(2012, 6, 1)
+    for i in range(183):
         curr_date = initial_date + datetime.timedelta(days=i)
         #Night_clubs only open on thur, fri, sat
         if curr_date.weekday() in [3, 4, 5]:
