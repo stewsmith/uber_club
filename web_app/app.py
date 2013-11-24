@@ -12,21 +12,23 @@ def index():
     return render_template('index.html', data=data)
 
 
-@app.route('/clubs', methods=['GET'])
-def my_form_post():
-    night_club = request.args.get('name')
+@app.route('/nightclub', methods=['GET'])
+def got_nightclub():
+    night_club = request.args['night_club']
     bartenders = db.select("""SELECT bartender FROM works_at
-                           WHERE night_club='%s'""" % night_club)
+                        WHERE night_club='%s'""" % night_club)
     beers = db.select("""SELECT beer FROM sells
-                           WHERE night_club='%s'""" % night_club)
-    ret_data = {"bartenders": bartenders, "beers": beers}
-    return jsonify(ret_data)
+                        WHERE night_club='%s'""" % night_club)
+    print night_club, bartenders, beers
+    return render_template('results.html', night_club=night_club,
+                           bartenders=bartenders, beers=beers)
 
 
 def str_to_date(str_date):
     d = map(lambda x: int(x), str_date.split("-"))
     date = datetime.date(d[0], d[1], d[2])
     return date
+
 
 @app.route('/pumped', methods=['POST'])
 def pumped():
