@@ -26,8 +26,9 @@ $("#pump-it").click(function() {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(data) {
-          console.log(data);
           $('#bartendersandbeers').hide();
+
+          console.log(data.queries);
 
           $('#num_drinkers').text("Predicted number of drinkers: " + data.num_drinkers_on_date);
           $('#recommended_cover_fee').text("Recommended Cover Fee: $" + data.recommended_cover_fee);

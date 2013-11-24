@@ -89,6 +89,10 @@ def pumped():
                                WHERE r1.drinker=d.name
                                GROUP BY date) r2;""" % (night_club, day_of_week)
 
+    queries = [ num_drinkers_query, avg_cover_fee_revenue_query, avg_num_men_query,
+               avg_num_women_query, bottom_three_beers_query,
+               top_three_bartenders_query, avg_age_on_date_query ]
+
     num_drinkers_on_date = int(db.select(num_drinkers_query)[0])
     avg_cover_fee_revenue = int(db.select(avg_cover_fee_revenue_query)[0])
     avg_num_men = int(db.select(avg_num_men_query)[0])
@@ -98,6 +102,7 @@ def pumped():
     bottom_three_beers = db.select(bottom_three_beers_query)
     top_three_bartenders = db.select(top_three_bartenders_query)
     recommended_cover_fee = avg_cover_fee_revenue / num_drinkers_on_date
+
     print num_drinkers_on_date
     print avg_cover_fee_revenue
     print recommended_cover_fee
@@ -106,6 +111,7 @@ def pumped():
     print avg_age_on_date
     print bottom_three_beers
     print top_three_bartenders
+
     data = {
         "num_drinkers_on_date": num_drinkers_on_date,
         "avg_cover_fee_revenue": avg_cover_fee_revenue,
@@ -115,7 +121,8 @@ def pumped():
         "MF_ratio": MF_ratio,
         "avg_age_on_date": avg_age_on_date,
         "bottom_three_beers": bottom_three_beers,
-        "top_three_bartenders": top_three_bartenders
+        "top_three_bartenders": top_three_bartenders,
+        "queries": queries
     }
     return jsonify(data)
 
