@@ -34,7 +34,7 @@ $("#pump-it").click(function() {
           $('#recommended_cover_fee').text("Recommended Cover Fee: $" + data.recommended_cover_fee);
           $('#MFratio').text("Male to Female Ratio: " + data.MF_ratio);
           var bartenders = data.top_three_bartenders;
-          $('#top3bartenders').text("Top 3 bartenders: " + bartenders);
+          $('#top3bartenders').text("Top Bartenders: " + bartenders);
           var beers = data.bottom_three_beers;
           $('#bottom3beers').text("Beers to put on special: " + beers);
           $('#avgage').text("Average age of drinkers:  " + data.avg_age_on_date);
