@@ -31,11 +31,11 @@
         <div class="container">
             <div class="header">
                 <ul class="nav nav-pills pull-right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <!--<li class="active"><a href="#">Home</a></li>-->
+                    <!--<li><a href="#">About</a></li>-->
+                    <!--<li><a href="#">Contact</a></li>-->
                 </ul>
-                <h3 class="text-muted">Uber Club</h3>
+                <h3 style="color:white;">Uber Club</h3>
             </div>
 
             <div class="jumbotron">
@@ -43,54 +43,49 @@
                 <div class="ui-widget">
                   <input id="clubs" value="{{ night_club }}" class="form-control" disabled/>
                 </div>
-                <div class="row-marketing">
+                <div class="row-marketing" id="bartendersandbeers">
                     <p>Date: <input type="text" id="datepicker" /></p>
                     <div class="col-lg-6">
                         <div id="bartenders_div">
                             <label for="bartenders">Bartenders: </label>
-                            <select id="bartenders" multiple="multiple">
+                            <select id="bartenders" multiple="multiple" size="{{ bartenders|length }}">
+                              {% for bartender in bartenders %}
+                                <option value="{{ bartender }}">{{ bartender }}</option>
+                              {% endfor %})
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div id="beers_div">
                             <label for="beers">Beers: </label>
-                            <select id="beers" multiple="multiple">
+                            <select id="beers" multiple="multiple" size="{{ beers|length }}">
+                              {% for beer in beers %}
+                                <option value="{{ beer }}">{{ beer }}</option>
+                              {% endfor %})
                             </select>
                         </div>
                     </div>
                     <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
                 </div>
+                <div class="row-marketing" id="results">
+                  <p id="num_drinkers"></p>
+                  <p id="recommended_cover_fee"></p>
+                  <p id="MFratio"></p>
+                  <p id="top3bartenders"></p>
+                  <p id="bottom3beers"></p>
+                  <p id="avgage"></p>
+                  <p id="avgcoverfeerevenue"></p>
+                </div>
             </div>
 
             <div class="footer">
-                <p>&copy; Uber Club 2013</p>
+                <p style="color:white;">&copy; Uber Club 2013</p>
             </div>
         </div> <!-- /container -->
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script>
-          {% autoescape false %}
-          var bartenders = {{ bartenders }};
-          var beers = {{ beers }};
-          {% endautoescape %}
-          //Get bartenders
-          $('#bartenders').empty();
-          bartenders.forEach(function(o) {
-            $('#bartenders').append("<option value='" + o + "'> " + o + " </option>");
-          });
-          $('#bartenders').attr("size", bartenders.length);
-
-          //Get beers
-
-          $('#beers').empty();
-          beers.forEach(function(o) {
-            $('#beers').append("<option value='" + o + "'> " + o + " </option>");
-          });
-          $('#beers').attr("size", beers.length);
-        </script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/script_results.js') }}"></script>
     </body>
 </html>

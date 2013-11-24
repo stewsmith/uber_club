@@ -16,16 +16,16 @@ def index():
 def got_nightclub():
     night_club = request.args['night_club']
     bartenders = db.select("""SELECT bartender FROM works_at
-                        WHERE night_club='%s'""" % night_club)
+                           WHERE night_club='%s'""" % night_club)
     beers = db.select("""SELECT beer FROM sells
-                        WHERE night_club='%s'""" % night_club)
-    print night_club, bartenders, beers
+                      WHERE night_club='%s'""" % night_club)
+    #print night_club, bartenders, beers
     return render_template('results.html', night_club=night_club,
                            bartenders=bartenders, beers=beers)
 
 
 def str_to_date(str_date):
-    d = map(lambda x: int(x), str_date.split("-"))
+    d = map(int, str_date.split("-"))
     date = datetime.date(d[0], d[1], d[2])
     return date
 
@@ -93,6 +93,7 @@ def pumped():
     avg_cover_fee_revenue = int(db.select(avg_cover_fee_revenue_query)[0])
     avg_num_men = int(db.select(avg_num_men_query)[0])
     avg_num_women = int(db.select(avg_num_women_query)[0])
+    MF_ratio = "%.2f" % (avg_num_men / float(avg_num_men + avg_num_women))
     avg_age_on_date = int(db.select(avg_age_on_date_query)[0])
     bottom_three_beers = db.select(bottom_three_beers_query)
     top_three_bartenders = db.select(top_three_bartenders_query)
@@ -105,7 +106,19 @@ def pumped():
     print avg_age_on_date
     print bottom_three_beers
     print top_three_bartenders
-    return "OK", 200
+    data = {
+        "num_drinkers_on_date": num_drinkers_on_date,
+        "avg_cover_fee_revenue": avg_cover_fee_revenue,
+        "recommended_cover_fee": recommended_cover_fee,
+        "avg_num_men": avg_num_men,
+        "avg_num_women": avg_num_women,
+        "MF_ratio": MF_ratio,
+        "avg_age_on_date": avg_age_on_date,
+        "bottom_three_beers": bottom_three_beers,
+        "top_three_bartenders": top_three_bartenders
+    }
+    return jsonify(data)
+
 
 def format_list(list):
     res = ""
