@@ -38,7 +38,7 @@ $("#pump-it").click(function() {
           var beers = data.bottom_three_beers;
           $('#bottom3beers').text("Beers to put on special: " + beers);
           $('#avgage').text("Average age of drinkers:  " + data.avg_age_on_date);
-          $('#avgcoverfeerevenue').text("Cover fee revenue: $" + data.avg_cover_fee_revenue);
+          $('#avgcoverfeerevenue').text("Predicted cover fee revenue: $" + data.avg_cover_fee_revenue);
           $('#results').show();
         }
     });

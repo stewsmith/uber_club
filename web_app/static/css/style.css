@@ -1,5 +1,14 @@
+.ui-widget {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
 body {
     background-image:url('../img/edm.jpg');
     background-size:cover;
     background-repeat:no-repeat;
+}
+
+a {
+  color: white;
 }

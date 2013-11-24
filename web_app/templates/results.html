@@ -35,7 +35,7 @@
                     <!--<li><a href="#">About</a></li>-->
                     <!--<li><a href="#">Contact</a></li>-->
                 </ul>
-                <h3 style="color:white;">Uber Club</h3>
+                <h3 style="color:white;"><a href="/">Uber Club</a></h3>
             </div>
 
             <div class="jumbotron">
@@ -43,29 +43,36 @@
                 <div class="ui-widget">
                   <input id="clubs" value="{{ night_club }}" class="form-control" disabled/>
                 </div>
-                <div class="row-marketing" id="bartendersandbeers">
-                    <p>Date: <input type="text" id="datepicker" /></p>
-                    <div class="col-lg-6">
-                        <div id="bartenders_div">
-                            <label for="bartenders">Bartenders: </label>
-                            <select id="bartenders" multiple="multiple" size="{{ bartenders|length }}">
-                              {% for bartender in bartenders %}
-                                <option value="{{ bartender }}">{{ bartender }}</option>
-                              {% endfor %})
-                            </select>
-                        </div>
+                <div class="row" id="bartendersandbeers">
+                    <p>
+                      <label for="datepicker">Date: </label>
+                      <input type="text" id="datepicker" />
+                    </p>
+                    <div class="row">
+                      <div class="col-lg-6">
+                          <div id="bartenders_div">
+                              <label for="bartenders">Bartenders: </label>
+                              <select id="bartenders" multiple="multiple" size="{{ bartenders|length }}">
+                                {% for bartender in bartenders %}
+                                  <option value="{{ bartender }}">{{ bartender }}</option>
+                                {% endfor %})
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div id="beers_div">
+                              <label for="beers">Beers: </label>
+                              <select id="beers" multiple="multiple" size="{{ beers|length }}">
+                                {% for beer in beers %}
+                                  <option value="{{ beer }}">{{ beer }}</option>
+                                {% endfor %})
+                              </select>
+                          </div>
+                      </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div id="beers_div">
-                            <label for="beers">Beers: </label>
-                            <select id="beers" multiple="multiple" size="{{ beers|length }}">
-                              {% for beer in beers %}
-                                <option value="{{ beer }}">{{ beer }}</option>
-                              {% endfor %})
-                            </select>
-                        </div>
+                    <div class="row">
+                      <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
                     </div>
-                    <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
                 </div>
                 <div class="row-marketing" id="results">
                   <p id="num_drinkers"></p>
@@ -75,6 +82,7 @@
                   <p id="bottom3beers"></p>
                   <p id="avgage"></p>
                   <p id="avgcoverfeerevenue"></p>
+                  <p id="recommended_dj"></p>
                 </div>
             </div>
 
