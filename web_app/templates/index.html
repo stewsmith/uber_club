@@ -65,13 +65,12 @@
                     <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
                 </div>
             </div>
-        </div>
 
-        <div class="footer">
-            <p>&copy; Uber Club 2013</p>
-        </div>
+            <div class="footer">
+                <p>&copy; Uber Club 2013</p>
+            </div>
 
-    </div> <!-- /container -->
+        </div> <!-- /container -->
 
 
 
@@ -79,14 +78,14 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-</body>
-<script>
-    {% autoescape false %}
-    var clubs = {{ data }};
-    {% endautoescape %}
-    $("#clubs").autocomplete({
-        source: clubs
-        });
-    </script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script>
+            {% autoescape false %}
+            var clubs = {{ data }};
+            {% endautoescape %}
+            $("#clubs").autocomplete({
+                source: clubs
+                });
+        </script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
 </html>
