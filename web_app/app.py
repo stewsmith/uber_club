@@ -70,16 +70,19 @@ def pumped():
                                   ORDER BY count(*) ASC) a
                                   WHERE a.beer in (%s)
                                   LIMIT 3;
-                                  """ % (night_club, day_of_week, format_list(beers))
+                                  """ % (night_club, day_of_week,
+                                         format_list(beers))
     top_three_bartenders_query = """SELECT bartender
                                     FROM( SELECT bartender
                                     FROM served s
-                                    WHERE night_club='%s' AND DAYOFWEEK(date)=%s
+                                    WHERE night_club='%s'
+                                    AND DAYOFWEEK(date)=%s
                                     GROUP BY bartender
                                     ORDER BY avg(tip) DESC) a
                                     WHERE a.bartender in (%s)
                                     LIMIT 3
-                                    """ % (night_club, day_of_week, format_list(bartenders))
+                                    """ % (night_club, day_of_week,
+                                           format_list(bartenders))
     avg_age_on_date_query = """SELECT avg(a) FROM(
                                SELECT date, avg(age) as a
                                FROM (SELECT drinker, date
@@ -87,11 +90,13 @@ def pumped():
                                WHERE night_club='%s' AND DAYOFWEEK(date)=%s
                                ORDER BY date) r1, drinkers d
                                WHERE r1.drinker=d.name
-                               GROUP BY date) r2;""" % (night_club, day_of_week)
+                               GROUP BY date) r2;
+                               """ % (night_club, day_of_week)
 
-    queries = [ num_drinkers_query, avg_cover_fee_revenue_query, avg_num_men_query,
-               avg_num_women_query, bottom_three_beers_query,
-               top_three_bartenders_query, avg_age_on_date_query ]
+    queries = [num_drinkers_query, avg_cover_fee_revenue_query,
+               avg_num_men_query, avg_num_women_query,
+               bottom_three_beers_query, top_three_bartenders_query,
+               avg_age_on_date_query]
 
     num_drinkers_on_date = int(db.select(num_drinkers_query)[0])
     avg_cover_fee_revenue = int(db.select(avg_cover_fee_revenue_query)[0])
@@ -130,8 +135,9 @@ def pumped():
 def format_list(list):
     res = ""
     for el in list:
-        res += "'%s', " % el
+        res += "\"%s\", " % el
     return res[0:-2]
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+    #app.run(host='0.0.0.0', port=80, debug=True)
