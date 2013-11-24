@@ -46,26 +46,24 @@
                 <div class="ui-widget">
                     <input id="clubs" placeholder="Night Club" class="form-control"/>
                 </div>
-                <form action="/pumped" method="POST">
-                    <div class="row-marketing">
-                        <p>Date: <input type="text" id="datepicker" /></p>
-                        <div class="col-lg-6">
-                            <div id="bartenders_div" style="display:none;">
-                                <label for="bartenders">Bartenders: </label>
-                                <select id="bartenders" multiple="multiple">
-                                </select>
-                            </div>
+                <div class="row-marketing">
+                    <p>Date: <input type="text" id="datepicker" /></p>
+                    <div class="col-lg-6">
+                        <div id="bartenders_div" style="display:none;">
+                            <label for="bartenders">Bartenders: </label>
+                            <select id="bartenders" multiple="multiple">
+                            </select>
                         </div>
-                        <div class="col-lg-6">
-                            <div id="beers_div" style="display:none;">
-                                <label for="beers">Beers: </label>
-                                <select id="beers" multiple="multiple">
-                                </select>
-                            </div>
-                        </div>
-                        <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
                     </div>
-                </form>
+                    <div class="col-lg-6">
+                        <div id="beers_div" style="display:none;">
+                            <label for="beers">Beers: </label>
+                            <select id="beers" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
+                </div>
             </div>
         </div>
 

@@ -4,10 +4,12 @@ from database import Database
 db = Database().connect()
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     data = db.select("SELECT name FROM night_clubs")
     return render_template('index.html', data=data)
+
 
 @app.route('/clubs', methods=['GET'])
 def my_form_post():
@@ -19,14 +21,16 @@ def my_form_post():
     ret_data = {"bartenders": bartenders, "beers": beers}
     return jsonify(ret_data)
 
+
 @app.route('/pumped', methods=['POST'])
 def pumped():
-    night_club = request.form['night_club']
-    bartenders = request.form['bartenders']
-    date = request.form['date']
-    beers = request.form['beers']
-    print "------------y-----------------"
+    json = request.get_json()
+    night_club = json['night_club']
+    bartenders = json['bartenders']
+    date = json['date']
+    beers = json['beers']
     print night_club, bartenders, date, beers
+
     return "OK", 200
 
 if __name__ == "__main__":

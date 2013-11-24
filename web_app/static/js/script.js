@@ -38,15 +38,19 @@ $("#pump-it").click(function() {
     var beers = $("#beers").val();
     var raw_date = $("#datepicker").val().split("/");
     var date = [raw_date[2], raw_date[0], raw_date[1]].join("-");
+
+    var data = {
+      "night_club": night_club,
+      "bartenders": bartenders,
+      "beers": beers,
+      "date": date
+    };
+
     $.ajax({
         type:"POST",
         url:"/pumped",
-        data:{
-            night_club: night_club,
-            date: date,
-            bartenders: bartenders,
-            beers: beers
-        }
+        data: JSON.stringify(data),
+        contentType: 'application/json'
     });
 });
 
