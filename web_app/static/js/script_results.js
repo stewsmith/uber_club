@@ -39,6 +39,9 @@ $("#pump-it").click(function() {
           $('#bottom3beers').text("Beers to put on special: " + beers);
           $('#avgage').text("Average age of drinkers:  " + data.avg_age_on_date);
           $('#avgcoverfeerevenue').text("Predicted cover fee revenue: $" + data.avg_cover_fee_revenue);
+          $('#recommended_dj').text("Recommended DJ: " + data.recommended_dj + " (" + data.dj_genre + ")");
+          var js_date = new Date(raw_date[2], raw_date[0] - 1, raw_date[1]);
+          $('#date_str').text("Date: " + js_date.toDateString());
           $('#results').show();
         }
     });
