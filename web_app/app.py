@@ -19,5 +19,15 @@ def my_form_post():
     ret_data = {"bartenders": bartenders, "beers": beers}
     return jsonify(ret_data)
 
+@app.route('/pumped', methods=['POST'])
+def pumped():
+    night_club = request.form['night_club']
+    bartenders = request.form['bartenders']
+    date = request.form['date']
+    beers = request.form['beers']
+    print "------------y-----------------"
+    print night_club, bartenders, date, beers
+    return "OK", 200
+
 if __name__ == "__main__":
     app.run('0.0.0.0', debug=True)

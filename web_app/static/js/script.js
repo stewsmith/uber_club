@@ -31,3 +31,22 @@ $("#datepicker").datepicker({
         return [day == 4 || day == 5 || day == 6];
     }
 });
+
+$("#pump-it").click(function() {
+    var night_club = $("#clubs").val();
+    var bartenders = $("#bartenders").val();
+    var beers = $("#beers").val();
+    var raw_date = $("#datepicker").val().split("/");
+    var date = [raw_date[2], raw_date[0], raw_date[1]].join("-");
+    $.ajax({
+        type:"POST",
+        url:"/pumped",
+        data:{
+            night_club: night_club,
+            date: date,
+            bartenders: bartenders,
+            beers: beers
+        }
+    });
+});
+
