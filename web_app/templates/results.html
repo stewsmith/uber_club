@@ -32,22 +32,35 @@
             <div class="header">
                 <ul class="nav nav-pills pull-right">
                     <li class="active"><a href="#">Home</a></li>
-                    <!--<li><a href="#">About</a></li>-->
-                    <!--<li><a href="#">Contact</a></li>-->
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
                 <h3 class="text-muted">Uber Club</h3>
             </div>
 
             <div class="jumbotron">
                 <h1>Uber Club</h1>
-                <p class="lead">Get money CLUB DATA. ADD DESCRIPTION HERE</p>
-                <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
-                <form method="POST" action="/nightclub">
-                  <div class="ui-widget">
-                      <input id="clubs" placeholder="Night Club" class="form-control" name="night_club"/>
-                  </div>
-                  <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
-                </form>
+                <div class="ui-widget">
+                  <input id="clubs" value="{{ night_club }}" class="form-control" disabled/>
+                </div>
+                <div class="row-marketing">
+                    <p>Date: <input type="text" id="datepicker" /></p>
+                    <div class="col-lg-6">
+                        <div id="bartenders_div">
+                            <label for="bartenders">Bartenders: </label>
+                            <select id="bartenders" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="beers_div">
+                            <label for="beers">Beers: </label>
+                            <select id="beers" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <button id="pump-it" type="submit" class="btn btn-default">Submit</button>
+                </div>
             </div>
 
             <div class="footer">
@@ -59,13 +72,25 @@
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script>
-            {% autoescape false %}
-            var clubs = {{ data }};
-            {% endautoescape %}
-            $("#clubs").autocomplete({
-              source: clubs
-            });
+          {% autoescape false %}
+          var bartenders = {{ bartenders }};
+          var beers = {{ beers }};
+          {% endautoescape %}
+          //Get bartenders
+          $('#bartenders').empty();
+          bartenders.forEach(function(o) {
+            $('#bartenders').append("<option value='" + o + "'> " + o + " </option>");
+          });
+          $('#bartenders').attr("size", bartenders.length);
+
+          //Get beers
+
+          $('#beers').empty();
+          beers.forEach(function(o) {
+            $('#beers').append("<option value='" + o + "'> " + o + " </option>");
+          });
+          $('#beers').attr("size", beers.length);
         </script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/script_index.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script_results.js') }}"></script>
     </body>
 </html>
