@@ -12,13 +12,13 @@ def index():
     return render_template('index.html', data=data)
 
 
-@app.route('/nightclub', methods=['POST'])
+@app.route('/nightclub', methods=['GET'])
 def got_nightclub():
     night_club = request.args['night_club']
     bartenders = db.select("""SELECT bartender FROM works_at
-                           WHERE night_club='%s'""" % night_club)
+                        WHERE night_club='%s'""" % night_club)
     beers = db.select("""SELECT beer FROM sells
-                      WHERE night_club='%s'""" % night_club)
+                        WHERE night_club='%s'""" % night_club)
     print night_club, bartenders, beers
     return render_template('results.html', night_club=night_club,
                            bartenders=bartenders, beers=beers)

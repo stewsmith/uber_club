@@ -5,11 +5,11 @@ $("#pump-it").click(function() {
       "night_club": night_club,
     };
 
-    $.ajax({
-        type:"POST",
-        url:"/nightclub",
-        data: JSON.stringify(data),
-        contentType: 'application/json'
-    });
+    //$.ajax({
+        //type:"POST",
+        //url:"/nightclub",
+        //data: JSON.stringify(data),
+        //contentType: 'application/json'
+    //});
 });
 
