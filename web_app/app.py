@@ -2,23 +2,26 @@ from flask import Flask, render_template, request, jsonify
 from database import Database
 import datetime
 
-db = Database().connect()
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
+    db = Database().connect()
     data = db.select("SELECT name FROM night_clubs")
+    db.close()
     return render_template('index.html', data=data)
 
 
 @app.route('/nightclub', methods=['GET'])
 def got_nightclub():
+    db = Database().connect()
     night_club = request.args['night_club']
     bartenders = db.select("""SELECT bartender FROM works_at
                            WHERE night_club='%s'""" % night_club)
     beers = db.select("""SELECT beer FROM sells
                       WHERE night_club='%s'""" % night_club)
+    db.close()
     #print night_club, bartenders, beers
     return render_template('results.html', night_club=night_club,
                            bartenders=bartenders, beers=beers)
@@ -32,6 +35,7 @@ def str_to_date(str_date):
 
 @app.route('/pumped', methods=['POST'])
 def pumped():
+    db = Database().connect()
     json = request.get_json()
     night_club = json['night_club']
     bartenders = json['bartenders']
@@ -144,6 +148,7 @@ def pumped():
         "dj_genre": dj_genre,
         "queries": queries
     }
+    db.close()
     return jsonify(data)
 
 
@@ -154,6 +159,5 @@ def format_list(list):
     return res[0:-2]
 
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0', port=80, debug=True)
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+    app.run(host='0.0.0.0', port=80, debug=True)
+    #app.run(host='0.0.0.0', port=5000, debug=True)
